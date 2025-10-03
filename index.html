@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Simulateur de Bus Urbain</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div id="app" class="app">
+      <div class="safe-area"></div>
+      <div class="scene-container">
+        <canvas id="scene-canvas" class="scene-canvas" aria-label="Vue conducteur du bus"></canvas>
+        <div class="hud" aria-live="polite">
+          <div class="hud-row primary">
+            <div class="hud-block">
+              <span class="hud-label">Vitesse</span>
+              <span id="hud-speed" class="hud-value">0 km/h</span>
+            </div>
+            <div class="hud-block">
+              <span class="hud-label">Régime</span>
+              <span id="hud-rpm" class="hud-value">0 tr/min</span>
+            </div>
+            <div class="hud-block hud-gear">
+              <span class="hud-label">Rapport</span>
+              <span id="hud-gear" class="hud-value">N</span>
+              <span id="hud-gear-trend" class="hud-trend"></span>
+            </div>
+          </div>
+          <div class="hud-row secondary">
+            <div class="hud-indicator" id="hud-k" aria-hidden="true">((K))</div>
+            <div class="hud-indicator" id="hud-stop">STOP</div>
+            <div class="hud-indicator" id="hud-retarder">R</div>
+          </div>
+          <div class="hud-bars">
+            <div class="hud-bar">
+              <span class="hud-label">Frein</span>
+              <div class="bar-track"><div id="hud-brake-bar" class="bar-fill"></div></div>
+            </div>
+            <div class="hud-bar">
+              <span class="hud-label">Accélérateur</span>
+              <div class="bar-track"><div id="hud-throttle-bar" class="bar-fill"></div></div>
+            </div>
+            <div class="hud-bar">
+              <span class="hud-label">Direction</span>
+              <div class="bar-track"><div id="hud-wheel-bar" class="bar-fill"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="wheel-panel" aria-label="Volant du bus">
+          <div class="wheel-shadow"></div>
+          <div id="wheel" class="wheel" role="slider" aria-valuemin="-450" aria-valuemax="450" aria-valuenow="0" aria-label="Angle du volant" tabindex="0">
+            <div class="wheel-center"></div>
+            <div class="wheel-spoke spoke-0"></div>
+            <div class="wheel-spoke spoke-1"></div>
+            <div class="wheel-spoke spoke-2"></div>
+          </div>
+          <div class="wheel-indicator" id="wheel-angle-indicator">0°</div>
+          <div class="wheel-settings">
+            <label for="wheel-lock-select">Butée volant</label>
+            <select id="wheel-lock-select" aria-label="Plage de rotation du volant">
+              <option value="900" selected>900°</option>
+              <option value="1080">1080°</option>
+              <option value="1200">1200°</option>
+              <option value="1440">1440°</option>
+            </select>
+          </div>
+        </div>
+        <div class="pedal-panel">
+          <div class="slider" id="brake-slider" data-type="brake" role="slider" aria-label="Frein" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="slider-track">
+              <div class="slider-detent detent-pre"></div>
+              <div class="slider-detent detent-threshold"></div>
+              <div class="slider-fill"></div>
+              <div class="slider-handle" aria-hidden="true">
+                <span class="slider-value">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="slider" id="throttle-slider" data-type="throttle" role="slider" aria-label="Accélérateur" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="slider-track">
+              <div class="slider-detent detent-kickdown"></div>
+              <div class="slider-fill"></div>
+              <div class="slider-handle" aria-hidden="true">
+                <span class="slider-value">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="camera-toggle" class="camera-toggle" type="button" aria-pressed="true">Vue conducteur</button>
+      <div class="touch-shield" id="touch-shield"></div>
+    </div>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
